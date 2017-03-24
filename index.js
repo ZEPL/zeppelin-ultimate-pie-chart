@@ -9,10 +9,9 @@ require('highcharts/modules/exporting')(Highcharts);
 import Drilldown from 'highcharts/modules/drilldown'
 if (!Highcharts.Chart.prototype.addSeriesAsDrilldown) { Drilldown(Highcharts) }
 
-import {
-  CommonParameter, createDrilldownDataStructure, createPieChartOption,
-} from './chart/pie'
+import { CommonParameter, createDrilldownDataStructure, createPieChartOption, } from './chart/pie'
 
+import { DonutParameter, createDonutChartOption } from './chart/donut'
 import { HalfDonutParameter, createHalfDonutChartOption } from './chart/harf-donut'
 
 export default class Chart extends Visualization {
@@ -30,6 +29,17 @@ export default class Chart extends Visualization {
             'drill-down': { dimension: 'multiple', axisType: 'group', },
           },
           parameter: CommonParameter,
+        },
+
+        'donut': {
+          transform: { method: 'drill-down', },
+          sharedAxis: true,
+          axis: {
+            'category': { dimension: 'multiple', axisType: 'key', },
+            'value': { dimension: 'multiple', axisType: 'aggregator'},
+            'drill-down': { dimension: 'multiple', axisType: 'group', },
+          },
+          parameter: DonutParameter,
         },
 
         'half-donut': {
@@ -86,6 +96,19 @@ export default class Chart extends Visualization {
     this.chartInstance = Highcharts.chart(this.getChartElementId(), chartOption)
   }
 
+  drawDonutChart(parameter, column, transformer) {
+    if (column.aggregator.length === 0) {
+      this.hideChart()
+      return /** have nothing to display, if aggregator is not specified at all */
+    }
+
+    const { rows, } = transformer()
+
+    const { series, drillDownSeries, } = createDrilldownDataStructure(rows)
+    const chartOption = createDonutChartOption(series, drillDownSeries, parameter)
+    this.chartInstance = Highcharts.chart(this.getChartElementId(), chartOption)
+  }
+
   drawHalfDonutChart(parameter, column, transformer) {
     if (column.aggregator.length === 0) {
       this.hideChart()
@@ -109,9 +132,12 @@ export default class Chart extends Visualization {
 
     if (chart === 'pie') {
       this.drawPieChart(parameter, column, transformer)
+    } else if (chart === 'donut') {
+      this.drawDonutChart(parameter, column, transformer)
     } else if (chart === 'half-donut') {
       this.drawHalfDonutChart(parameter, column, transformer)
     }
+
   }
 
   getTransformation() {
