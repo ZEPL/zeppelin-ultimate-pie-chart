@@ -100,7 +100,12 @@ export default class Chart extends Visualization {
   }
 
   render(data) {
-    const { chart, parameter, column, transformer, } = data
+    const {
+      chartChanged, parameterChanged,
+      chart, parameter, column, transformer,
+    } = data
+
+    if (!chartChanged && !parameterChanged) { return }
 
     if (chart === 'pie') {
       this.drawPieChart(parameter, column, transformer)

@@ -15,6 +15,10 @@ export function createHalfDonutChartOption(series, drillDownSeries, parameter) {
   option.plotOptions.pie.center = [ '50%', '75%', ]
 
   option.series[0].innerSize = `${innerSize}%`
+  option.drilldown.series.map(s => {
+    s.innerSize = `${innerSize}%`
+    return s
+  })
 
   if (mainTitle !== '') {
     option.title.align = 'center'
