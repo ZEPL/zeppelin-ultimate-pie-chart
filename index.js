@@ -83,6 +83,16 @@ export default class Chart extends Visualization {
         </div>`
   }
 
+  showError(error) {
+    this.clearChart()
+    this.getChartElement().innerHTML = `
+        <div style="margin-top: 60px; text-align: center; font-weight: 300">
+            <span style="font-size:30px; color: #e4573c;">
+                ${error.message} 
+            </span>
+        </div>`
+  }
+
   drawPieChart(parameter, column, transformer) {
     if (column.aggregator.length === 0) {
       this.hideChart()
@@ -130,14 +140,18 @@ export default class Chart extends Visualization {
 
     if (!chartChanged && !parameterChanged) { return }
 
-    if (chart === 'pie') {
-      this.drawPieChart(parameter, column, transformer)
-    } else if (chart === 'donut') {
-      this.drawDonutChart(parameter, column, transformer)
-    } else if (chart === 'half-donut') {
-      this.drawHalfDonutChart(parameter, column, transformer)
+    try {
+      if (chart === 'pie') {
+        this.drawPieChart(parameter, column, transformer)
+      } else if (chart === 'donut') {
+        this.drawDonutChart(parameter, column, transformer)
+      } else if (chart === 'half-donut') {
+        this.drawHalfDonutChart(parameter, column, transformer)
+      }
+    } catch (error) {
+      console.error(error)
+      this.showError(error)
     }
-
   }
 
   getTransformation() {
