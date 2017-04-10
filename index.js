@@ -25,7 +25,7 @@ export default class Chart extends Visualization {
           sharedAxis: true,
           axis: {
             'category': { dimension: 'multiple', axisType: 'key', },
-            'value': { dimension: 'multiple', axisType: 'aggregator'},
+            'value': { dimension: 'multiple', axisType: 'aggregator', minAxisCount: 1, },
             'drill-down': { dimension: 'multiple', axisType: 'group', },
           },
           parameter: CommonParameter,
@@ -36,7 +36,7 @@ export default class Chart extends Visualization {
           sharedAxis: true,
           axis: {
             'category': { dimension: 'multiple', axisType: 'key', },
-            'value': { dimension: 'multiple', axisType: 'aggregator'},
+            'value': { dimension: 'multiple', axisType: 'aggregator', minAxisCount: 1, },
             'drill-down': { dimension: 'multiple', axisType: 'group', },
           },
           parameter: DonutParameter,
@@ -47,7 +47,7 @@ export default class Chart extends Visualization {
           sharedAxis: true,
           axis: {
             'category': { dimension: 'multiple', axisType: 'key', },
-            'value': { dimension: 'multiple', axisType: 'aggregator'},
+            'value': { dimension: 'multiple', axisType: 'aggregator', minAxisCount: 1, },
             'drill-down': { dimension: 'multiple', axisType: 'group', },
           },
           parameter: HalfDonutParameter,
