@@ -2,6 +2,8 @@
 
 The Ultimate Pie Chart for Apache Zeppelin using [highcharts](https://www.amcharts.com/)
 
+![](https://raw.githubusercontent.com/ZEPL/zeppelin-ultimate-pie-chart/master/screenshots/640.gif)
+
 ## Compatibility
 
 | Chart Version | Zeppelin Version |
