@@ -140,14 +140,6 @@ export default class Chart extends Visualization {
     }
   }
 
-  resize() {
-    if (this.isActive()) {
-      this.refresh();
-    } else {
-      this._dirty = true;
-    }
-  }
-
   render(data) {
     const {
       chartChanged, parameterChanged,
