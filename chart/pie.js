@@ -37,11 +37,12 @@ export function createDrilldownDataStructure(rows, seriesName) {
     const selector = row.selector
 
 
-    const drillDownData = row.drillDown.map(dr => {
-      const drillDownValue = parseNumber(dr.value)
-      return [ dr.group, drillDownValue, ]
-    })
-    drillDownSeries.push({ name: selector, id: selector, data: drillDownData, })
+    const drillDownData = [];
+    for (let j = 0; j < row.drillDown.length; j++) {
+      const drillDownValue = parseNumber(row.drillDown[j].value)
+      if (drillDownValue == 0) continue;
+      drillDownData.push([row.drillDown[j].group, drillDownValue, ])
+    }
 
     let seriesValue = parseNumber(row.value)
 
